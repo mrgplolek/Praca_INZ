@@ -1,0 +1,57 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    <form method="POST" >
+    {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="date" class="form-control" placeholder="Data wykonania naprawy" name="date"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <input type="number" class="form-control" placeholder="Przebieg w chwili rozpoczęcia naprawy" name="mileage"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <select class="form-select" aria-label="Default select example" name="type">
+                <option selected disabled>Typ naprawy</option>
+                <option value="przeglad">Naprawa po przeglądzie</option>
+                <option value="wypadek">Naprawa powypadkowa</option>
+                <option value="serwis">Serwis eksploatacyjny podzespołów</option>
+                <option value="male_mech">Drobne uszkodzenie mechaniczne</option>
+                <option value="duze_mech">Znaczące uszkodzenie mechaniczne</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <textarea rows="3" class="form-control" placeholder="Opis naprawianych usterek" name="desc"  aria-describedby="basic-addon1"></textarea>
+        </div>
+
+        <!-- Button trigger modal -->
+        <div style="text-align: center;">
+            <div class="col-12">
+                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Dodaj naprawę
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Dodawanie plików</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                <div class="modal-body">
+                    Pamiętaj o dodaniu zdjęć i/lub faktur związanych tą naprawą.
+                    Możesz to zrobić w menu edycji naprawy.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Chcę coś zmienić</button>
+                    <button type="submit" class="btn btn-outline-success">Zrozumiałem, dodaj naprawę</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+
+{% endblock %}

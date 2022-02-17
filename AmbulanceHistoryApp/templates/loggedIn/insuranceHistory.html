@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-10">
+          <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            <br></div>
+        <div class="col-2">
+            <div style="text-align: center;">
+                <a class="btn btn-outline-secondary" href="{% url 'add_insurance'  car_id %}" role="button">Nowe ubezpieczenie</a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Data wykupu</th>
+              <th scope="col">Rodzaj</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+            {% load i18n %}
+            {% language 'pl' %}
+            {% for insurance in data %}
+                <tr>
+                  <td>{{ insurance.data_wykupu|date:'d M Y' }}</td>
+                    {% if insurance.rodzaj == 'oc' %}
+                    <td>OC</td>
+                    {% else %}
+                    <td>OC oraz AC</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+          {% endlanguage %}
+          </tbody>
+        </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+
+{% endblock %}

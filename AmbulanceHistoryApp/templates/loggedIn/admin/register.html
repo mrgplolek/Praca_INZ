@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    <h3>
+        <div style="text-align: center;">
+            <small class="text-muted">Dodawanie użytkownika</small>
+        </div><hr>
+    </h3>
+    <form method="POST" action="" >
+    {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Imię" name="first_name"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Nazwisko" name="last_name"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <input type="email" class="form-control" placeholder="E-mail" name="email"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Nazwa użytkownika" name="username"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="Hasło" name="password"  aria-describedby="basic-addon1"/>
+        </div>
+        <select class="form-select" name="is_superuser">
+          <option selected>Wybierz typ konta</option>
+          <option value='False'>Pracownik</option>
+          <option value="True">Administrator</option>
+        </select><hr>
+        <div style="text-align: center;">
+            <div class="col-12">
+                <button type="submit" class="btn btn-outline-success">Utwórz nowe konto</button>
+            </div>
+        </div>
+    </form>
+
+
+{% endblock %}

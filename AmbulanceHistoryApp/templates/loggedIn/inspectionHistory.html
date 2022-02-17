@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-10">
+          <input class="form-control" id="myInput" type="text" placeholder="Szukaj...">
+            <br></div>
+        <div class="col-2">
+            <div style="text-align: center;">
+                <a class="btn btn-outline-secondary" href="{% url 'add_inspection'  car_id %}" role="button">Nowy przegląd</a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped">
+          <thead>
+            <tr>
+                <th scope="col">Data przeglądu</th>
+                <th scope="col">Wynik przeglądu</th>
+                <th scope="col">Opis wykrytych usterek</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+            {% load i18n %}
+            {% language 'pl' %}
+            {% for inspection in data %}
+                <tr>
+                    <td>{{ inspection.data_przegladu|date:'d M Y' }}</td>
+                    <td>{{ inspection.wynik }}</td>
+                    <td>{{ inspection.opis_usterek }}</td>
+                </tr>
+            {% endfor %}
+          {% endlanguage %}
+          </tbody>
+        </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+
+{% endblock %}

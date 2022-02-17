@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-10">
+          <input class="form-control" id="myInput" type="text" placeholder="Szukaj...">
+            <br></div>
+        <div class="col-2">
+            <div style="text-align: center;">
+                <a class="btn btn-outline-secondary" href="{% url 'add_intevention'  car_id %}" role="button">Nowy wyjazd</a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Data i godzina wyjazdu</th>
+              <th scope="col">Data i godzina powrotu</th>
+              <th scope="col">Notatka</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+            {% load i18n %}
+            {% language 'pl' %}
+            {% for intervention in data %}
+                <tr>
+                  <td>{{ intervention.data_wyjazdu }}</td>
+                  <td>{{ intervention.data_powrotu }}</td>
+                  <td>{{ intervention.notatka }}</td>
+                </tr>
+            {% endfor %}
+          {% endlanguage %}
+          </tbody>
+        </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+
+{% endblock %}

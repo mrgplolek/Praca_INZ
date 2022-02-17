@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Nazwa pliku</th>
+              <th scope="col">Akcja</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+
+            {% for invoice in invoices %}
+                <tr>
+                    <td>Faktura numer {{ forloop.counter }}</td>
+                    <td>
+                        <div style="text-align: left;">
+                            <a class="btn btn-outline-secondary btn-sm" href="{{ invoice.url }}" role="button" target="_blank">Zobacz fakturę</a>
+                        </div>
+                    </td>
+
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+
+{% endblock %}

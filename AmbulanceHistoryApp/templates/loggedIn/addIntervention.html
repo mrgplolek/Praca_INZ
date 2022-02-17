@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    <form method="POST" >
+    {% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+                <p>Data i godzina wyjazdu:</p>
+                <div class="input-group mb-3">
+                    <input type="datetime-local" class="form-control" placeholder="Data i godzina wyjazdu" name="go_out"  aria-describedby="basic-addon1"/>
+                </div>
+            </div>
+            <div class="col-6">
+                <p>Data i godzina powrotu:</p>
+                <div class="input-group mb-3">
+                    <input type="datetime-local" class="form-control" placeholder="Data i godzina wyjazdu" name="come_back"  aria-describedby="basic-addon1"/>
+                </div>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <textarea rows="3" class="form-control" placeholder="Notatka" name="desc"  aria-describedby="basic-addon1"></textarea>
+        </div>
+        <div style="text-align: center;">
+            <div class="col-12">
+                <button type="submit" class="btn btn-outline-success">Dodaj interwencję</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

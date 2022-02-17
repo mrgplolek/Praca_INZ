@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    <form method="POST" action="addStation" >
+    {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Miasto" name="city"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Adres" name="address"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <textarea rows="3" class="form-control" placeholder="Opis" name="description"  aria-describedby="basic-addon1"></textarea>
+        </div>
+        <div style="text-align: center;">
+            <div class="col-12">
+                <button type="submit" class="btn btn-outline-success">Dodaj podstację</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

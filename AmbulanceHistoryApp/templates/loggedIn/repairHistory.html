@@ -1,0 +1,125 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-10">
+          <input class="form-control" id="myInput" type="text" placeholder="Szukaj...">
+            <br></div>
+        <div class="col-2">
+            <div style="text-align: center;">
+                <a class="btn btn-outline-secondary" href="#" role="button">Dodaj naprawę</a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped">
+          <thead>
+            <tr>
+                <th scope="col">Data naprawy</th>
+                <th scope="col">Kategoria</th>
+                <th scope="col">Opis</th>
+                <th scope="col">Akcja</th>
+                <th scope="col">Pliki</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+            {% load i18n %}
+            {% language 'pl' %}
+            {% for repair in data %}
+                <tr>
+                    <td>{{ repair.data_naprawy|date:'d M Y' }}</td>
+
+                    {% if repair.kategoria == 'przeglad' %}
+                        <td>Naprawa po przeglądzie</td>
+                    {% endif %}
+                    {% if repair.kategoria == 'wypadek' %}
+                        <td>Naprawa powypadkowa</td>
+                    {% endif %}
+                    {% if repair.kategoria == 'serwis' %}
+                        <td>Serwis eksploatacyjny podzespołów</td>
+                    {% endif %}
+                    {% if repair.kategoria == 'male_mech' %}
+                        <td>Drobne uszkodzenie mechaniczne</td>
+                    {% endif %}
+                    {% if repair.kategoria == 'duze_mech' %}
+                        <td>Znaczące uszkodzenie mechaniczne</td>
+                    {% endif %}
+                    <td>{{ repair.opis_usterek }}</td>
+                    <td>
+                        <div style="text-align: left;">
+                            <a class="btn btn-outline-secondary btn-sm" href="{% url 'show_images' repair.id %}" role="button">Zobacz zdjęcia</a> <!--  -->
+                        </div>
+                        <div style="text-align: left;">
+                            <a class="btn btn-outline-secondary btn-sm" href="{% url 'show_invoices' repair.id %}" role="button">Zobacz faktury</a>
+                        </div>
+                    </td>
+                    <td>
+                        <table class="table table-bordered table-sm border-dark">
+                            <tbody>
+                                <tr>
+                                    {% csrf_token %}
+                                    <form method="post" enctype="multipart/form-data">
+                                        <td><input type="file" name="upload_before" accept="image/*"></td>
+                                        <td>
+                                            <div style="text-align: center;">
+                                                <button type="submit" name="beforeForm" class="btn btn-outline-secondary btn-sm">Dodaj zdjęcie przed naprawą</button>
+                                            </div>
+                                        </td>
+                                        <input type="hidden" id="repairId" name="repairId" value={{ repair.id }}>
+                                    </form>
+                                </tr>
+                                <tr>
+                                    {% csrf_token %}
+                                    <form method="post" enctype="multipart/form-data">
+                                        <th><input type="file" name="upload_after" accept="image/*"></th>
+                                        <th>
+                                            <div style="text-align: center;">
+                                                <button type="submit" name="afterForm" class="btn btn-outline-secondary btn-sm">Dodaj zdjęcie po naprawie</button>
+                                            </div>
+                                        </th>
+                                        <input type="hidden" id="repairId" name="repairId" value={{ repair.id }}>
+                                    </form>
+                                </tr>
+                                <tr>
+                                    {% csrf_token %}
+                                    <form method="post" enctype="multipart/form-data">
+                                        <th><input type="file" name="upload_invoice" accept=".pdf"></th>
+                                        <th>
+                                            <div style="text-align: center;">
+                                                <button type="submit" name="acceptInvoice" class="btn btn-outline-secondary btn-sm">Dodaj fakturę</button>
+                                            </div>
+                                        </th>
+                                        <input type="hidden" id="repairId" name="repairId" value={{ repair.id }}>
+                                    </form>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </td>
+                </tr>
+            {% endfor %}
+          {% endlanguage %}
+          </tbody>
+        </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+
+{% endblock %}

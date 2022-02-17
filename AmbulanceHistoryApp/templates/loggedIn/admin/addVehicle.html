@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    <form method="POST" action="addVehicle" >
+    {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="VIN number" name="vin"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Vehicle make" name="make"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Vehicle model" name="model"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Engine" name="engine"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+        <select class="form-select" aria-label="Default select example" name="transmission">
+          <option selected disabled>Type of transmission</option>
+          <option value="manual">Manual</option>
+          <option value="automatic">Automatic</option>
+        </select>
+        </div>
+        <div class="input-group mb-3">
+            <input type="number" class="form-control" placeholder="Mileage [km]" name="mileage"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+        <select class="form-select" aria-label="Default select example" name="type">
+            <option selected disabled>Ambulance type</option>
+            <option value="specjalistyczna">S - specialist</option>
+            <option value="podstawowa">P - primary</option>
+            <option value="transportowa">T - transport</option>
+            <option value="neonatologiczna">N - neonatological</option>
+        </select></div>
+        <div class="input-group mb-3">
+        <select class="form-select" aria-label="Default select example" name="driver_cat">
+            <option selected disabled>Required driving licence category</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+        </select></div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Registration number" name="reg_num"  aria-describedby="basic-addon1"/>
+        </div>
+        <div class="input-group mb-3">
+        <select class="form-select" aria-label="Default select example" name="status">
+            <option selected disabled>Status</option>
+            <option value="aktywna">Active</option>
+            <option value="w_naprawie">Repair in progress</option>
+            <option value="OoS">Out of service</option>
+        </select></div>
+        <div class="input-group mb-3">
+        <select class="form-select" name="station" data-show-subtext="true" data-live-search="true">
+            <option selected disabled>Ambulance station</option>
+            {% for station in stations %}
+                <option value="{{ station.id }}">{{ station.miasto }} - {{ station.adres }}</option>
+            {% endfor %}
+        </select>
+        </div>
+        <div style="text-align: center;">
+            <div class="col-12">
+                <button type="submit" class="btn btn-outline-success">Add new ambulance</button>
+            </div>
+        </div>
+    </form>
+    <br><br><br>
+
+{% endblock %}

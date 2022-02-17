@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+      <input class="form-control" id="myInput" type="text" placeholder="Szukaj...">
+      <br>
+    <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Numer rejestracyjny</th>
+              <th scope="col">Podstacja</th>
+              <th scope="col">Status</th>
+              <th scope="col">Szczegóły</th>
+                <th scope="col">Akcja</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+
+            {% for vehicle in vehicles %}
+                <tr>
+                  <td>{{ vehicle.numer_rejestracyjny }}</td>
+                  <td>{{ vehicle.podstacja.miasto }} - {{ vehicle.podstacja.adres }}</td>
+                  <td>{{ vehicle.status }}</td>
+                  <td><a href="vehicleDetails/{{ vehicle.id }}" role="button" class="btn btn-secondary btn-sm">Szczegóły</a></td>
+                <td><a href="#" role="button" class="btn btn-secondary btn-sm">Generuj raport</a></td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+
+{% endblock %}
+
